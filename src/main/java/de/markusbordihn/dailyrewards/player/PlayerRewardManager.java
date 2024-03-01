@@ -122,20 +122,23 @@ public class PlayerRewardManager {
 
     // Check if player has any unclaimed rewards.
     if (RewardUserData.get().hasUnclaimedRewardsForCurrentMonth(uuid)) {
-      if (daysLeftCurrentMonth > 0) {
-        player.sendSystemMessage(
-            Component.translatable(Constants.TEXT_PREFIX + "unclaimed_rewarded_item",
-                player.getName(), daysLeftCurrentMonth));
-      } else {
-        player.sendSystemMessage(Component
-            .translatable(Constants.TEXT_PREFIX + "unclaimed_rewarded_item_today", player.getName())
-            .withStyle(ChatFormatting.RED));
+      if (Boolean.TRUE.equals(COMMON.messageOnLoggedIn.get())) {
+        if (daysLeftCurrentMonth > 0) {
+          player.sendSystemMessage(
+                  Component.translatable(Constants.TEXT_PREFIX + "unclaimed_rewarded_item",
+                          player.getName(), daysLeftCurrentMonth));
+        } else {
+          player.sendSystemMessage(Component
+                  .translatable(Constants.TEXT_PREFIX + "unclaimed_rewarded_item_today", player.getName())
+                  .withStyle(ChatFormatting.RED));
+        }
       }
       hasUnclaimedRewards = true;
     }
 
     // Check if player has any unclaimed special rewards.
     if (SpecialRewardUserData.get().hasUnclaimedRewardsForCurrentMonth(uuid)) {
+      if (Boolean.TRUE.equals(COMMON.messageOnLoggedIn.get())) {
       if (daysLeftCurrentMonth > 0) {
         player.sendSystemMessage(
             Component.translatable(Constants.TEXT_PREFIX + "unclaimed_special_rewarded_item",
@@ -144,6 +147,7 @@ public class PlayerRewardManager {
         player.sendSystemMessage(
             Component.translatable(Constants.TEXT_PREFIX + "unclaimed_special_rewarded_item_today",
                 player.getName()).withStyle(ChatFormatting.RED));
+      }
       }
       hasUnclaimedRewards = true;
     }
@@ -164,7 +168,7 @@ public class PlayerRewardManager {
           RewardsScreen.openRewardOverviewMenuForPlayer(player);
           break;
       }
-    } else if (hasUnclaimedRewards) {
+    } else if (hasUnclaimedRewards && Boolean.TRUE.equals(COMMON.messageOnLoggedIn.get())) {
       player.sendSystemMessage(
           Component.translatable(Constants.TEXT_PREFIX + "claim_rewards", claimCommand));
     }

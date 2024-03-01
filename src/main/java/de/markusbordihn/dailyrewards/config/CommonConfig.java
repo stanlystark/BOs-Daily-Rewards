@@ -139,6 +139,9 @@ public class CommonConfig {
     public final ForgeConfigSpec.ConfigValue<List<String>> rewardsDecemberSpecialItems;
     public final ForgeConfigSpec.ConfigValue<List<String>> rewardsDecemberSpecialUsers;
 
+
+    public final ForgeConfigSpec.BooleanValue messageOnLoggedIn;
+
     private static final String getListOfRewardsItemsText(String month) {
       return "List of rewards items for " + month;
     }
@@ -198,6 +201,13 @@ public class CommonConfig {
       lootBagFillItemsChance = builder.comment(
           "The chance to use a loot bag item instead of a regular one. e.g. 15 means every 15th items could be a loot bag item. (0 = disabled)")
           .defineInRange("lootBagFillItemsChance", 15, 0, 100);
+      builder.pop();
+
+
+      builder.push("Messages");
+      messageOnLoggedIn = builder.comment(
+                      "Send a message when players are logged in")
+              .define("messageOnLoggedIn", true);
       builder.pop();
 
       builder.push("Rewards Items");
